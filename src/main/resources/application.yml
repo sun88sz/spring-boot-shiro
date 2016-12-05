@@ -1,0 +1,30 @@
+server:
+  port: 9090
+
+spring:
+  datasource:
+    url : jdbc:oracle:thin:@180.97.80.177:1621:traveldb
+    username : jike
+    password : jike17712613261
+    driverClassName : oracle.jdbc.OracleDriver
+
+## Specify the DBMS
+  jpa:
+#    database : ORACLE
+## Show or not log for each sql query
+    show-sql : true
+## Hibernate ddl auto (create, create-drop, update)
+#    hibernate:
+#      ddl-auto : update
+## Naming strategy
+##      naming-strategy : org.hibernate.cfg.ImprovedNamingStrategy
+#    open-in-view : false
+## stripped before adding them to the entity manager)
+##    properties:
+##      hibernate:
+##        dialect : org.hibernate.dialect.Oracle10gDialect
+
+#security:
+#  user:
+#    name: admin
+#    password: test
