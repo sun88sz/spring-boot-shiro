@@ -117,7 +117,10 @@
         </dependency>
     </dependencies>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1ef15197b0af53a637b418c30c540a5b8e3e679a
     <build>
         <plugins>
             <plugin>
@@ -134,7 +137,10 @@
         </plugins>
     </build>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1ef15197b0af53a637b418c30c540a5b8e3e679a
     <distributionManagement>
         <repository>
             <id>nexus-releases</id>
