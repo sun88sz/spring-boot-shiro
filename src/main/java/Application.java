@@ -16,7 +16,7 @@ public class Application extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/css/**").addResourceLocations("classpath:/css/");
+		registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
 		registry.addResourceHandler("/templates/**").addResourceLocations("classpath:/templates/");
 	}
 
@@ -28,10 +28,11 @@ public class Application extends WebMvcConfigurerAdapter {
 	public EmbeddedServletContainerCustomizer containerCustomizer() {
 		return (container -> {
 			ErrorPage error401Page = new ErrorPage(HttpStatus.UNAUTHORIZED, "/401.html");
+			ErrorPage error403Page = new ErrorPage(HttpStatus.FORBIDDEN, "/403.html");
 			ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, "/404.html");
 			ErrorPage error500Page = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/500.html");
 
-			container.addErrorPages(error401Page, error404Page, error500Page);
+			container.addErrorPages(error401Page, error403Page, error404Page, error500Page);
 		});
 	}
 }

@@ -20,6 +20,8 @@ public class User {
 
 	private Long deptId;
 
+	@NotNull
+	@ApiModelProperty(value = "用户名", required = true)
 	private String username;
 
 	private String password;
@@ -44,8 +46,6 @@ public class User {
 		this.deptId = deptId;
 	}
 
-	@NotNull
-	@ApiModelProperty(value = "用户名", required = true)
 	public String getUsername() {
 		return username;
 	}

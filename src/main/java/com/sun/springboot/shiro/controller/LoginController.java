@@ -21,9 +21,9 @@ import javax.validation.Valid;
  *
  */
 @Controller
-public class ShiroController {
+public class LoginController {
 
-	private static final Logger logger = LoggerFactory.getLogger(ShiroController.class);
+	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginForm(Model model) {
@@ -84,10 +84,25 @@ public class ShiroController {
 		return "redirect:/login";
 	}
 
-	@RequestMapping("/403")
+	@RequestMapping("/")
+	public String index() {
+		return "login";
+	}
+
+	@RequestMapping("/hello")
+	public String hello() {
+		return "hello";
+	}
+
+	@RequestMapping("/401")
 	public String unauthorizedRole() {
 		logger.info("------没有权限-------");
-		return "403";
+		return "401";
+	}
+
+	@RequestMapping("/403")
+	public String noPermission() {
+		return "../static/403";
 	}
 
 	// @RequestMapping("/user")
