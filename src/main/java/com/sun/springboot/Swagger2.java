@@ -23,14 +23,14 @@ public class Swagger2 {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.jike"))
+                .apis(RequestHandlerSelectors.basePackage("com.sum"))
                 .paths(PathSelectors.any())
                 .build();
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("Travel_web_hotel_server Restful文档")
+                .title("spring-boot-shiro Restful文档")
                 .description("")
                 .termsOfServiceUrl("")
                 .contact(new Contact("Luopan88","",""))

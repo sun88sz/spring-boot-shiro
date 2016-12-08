@@ -1,5 +1,6 @@
 package com.sun.springboot.shiro;
 
+import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -27,6 +28,14 @@ public class ShiroConfiguration {
 	private static final Logger logger = LoggerFactory.getLogger(ShiroConfiguration.class);
 
 	@Bean
+	public CredentialsMatcher getCredentialsMatcher() {
+		BCryptCredentialsMathcher BCryptCredentialsMathcher = new BCryptCredentialsMathcher();
+		BCryptPasswordService bcps = new BCryptPasswordService();
+		BCryptCredentialsMathcher.setPasswordService(bcps);
+		return BCryptCredentialsMathcher;
+	}
+
+	@Bean
 	public EhCacheManager getEhCacheManager() {
 		EhCacheManager em = new EhCacheManager();
 		em.setCacheManagerConfigFile("classpath:ehcache-shiro.xml");
@@ -35,7 +44,7 @@ public class ShiroConfiguration {
 
 	/**
 	 * 注册自定义Realm
-	 * 
+	 *
 	 * @param cacheManager
 	 * @return
 	 */
@@ -43,6 +52,7 @@ public class ShiroConfiguration {
 	public MyShiroRealm myShiroRealm(EhCacheManager cacheManager) {
 		MyShiroRealm realm = new MyShiroRealm();
 		realm.setCacheManager(cacheManager);
+		realm.setCredentialsMatcher(getCredentialsMatcher());
 		return realm;
 	}
 
@@ -118,7 +128,8 @@ public class ShiroConfiguration {
 		shiroFilterFactoryBean.setLoginUrl("/login");
 		// 登录成功后要跳转的连接
 		shiroFilterFactoryBean.setSuccessUrl("/hello");
-		shiroFilterFactoryBean.setUnauthorizedUrl("/401");
+		// 没有权限跳转的页面
+		shiroFilterFactoryBean.setUnauthorizedUrl("../static/403");
 
 		loadShiroFilterChain(shiroFilterFactoryBean);
 		return shiroFilterFactoryBean;

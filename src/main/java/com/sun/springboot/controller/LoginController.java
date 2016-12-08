@@ -1,8 +1,9 @@
-package com.sun.springboot.shiro.controller;
+package com.sun.springboot.controller;
 
 import com.sun.springboot.bean.User;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,7 @@ public class LoginController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String loginForm(Model model) {
+	public String loginForm( Model model) {
 		model.addAttribute("user", new User());
 		return "login";
 	}
@@ -69,7 +70,7 @@ public class LoginController {
 		// 验证是否登录成功
 		if (currentUser.isAuthenticated()) {
 			logger.info("用户[" + username + "]登录认证通过(这里可以进行一些认证通过后的一些系统参数初始化操作)");
-			return "redirect:/user";
+			return "redirect:/hello";
 		} else {
 			token.clear();
 			return "redirect:/login";
@@ -90,6 +91,7 @@ public class LoginController {
 	}
 
 	@RequestMapping("/hello")
+	@RequiresPermissions("xxx")
 	public String hello() {
 		return "hello";
 	}

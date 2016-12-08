@@ -6,8 +6,10 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,12 +88,25 @@ public class MyShiroRealm extends AuthorizingRealm {
 
 		User user = new User();
 		user.setUsername("1");
-		user.setPassword("2");
+		user.setPassword("$2a$10$qQpmfbLvQofPiRizlkeQred3i70SUSXxKwMCPHcYejNq4rLAe8hFe");// 2
 
 		if (user != null) {
 			// 若存在，将此用户存放到登录认证info中，无需自己做密码对比，Shiro会为我们进行密码对比校验
-			return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), getName());
+			SimpleAuthenticationInfo authen = new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(),
+					getName());
+			return authen;
 		}
 		return null;
+	}
+
+	public static void main(String[] args) {
+
+		String salt = ByteSource.Util.bytes("1my_salt").toBase64();
+		System.out.println(salt);
+
+		Md5Hash md5Hash = new Md5Hash("2", salt);
+		String s = md5Hash.toString();
+		System.out.println(s);
+
 	}
 }
