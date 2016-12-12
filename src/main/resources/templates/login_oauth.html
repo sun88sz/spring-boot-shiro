@@ -10,8 +10,11 @@
 
 <div class="container">
     <section id="content">
-        <form action="/login" method="POST">
-            <h1>Springboot Shiro</h1>
+        <form th:action="@{/authorize}" method="GET">
+            <h1>Springboot OAuth Shiro</h1>
+            <input name = "client_id" th:value="${#httpServletRequest.getAttribute('client_id')}" th:type="text" hidden="true"/>
+            <input name = "response_type" th:value="${#httpServletRequest.getAttribute('response_type')}" th:type="text" hidden="true"/>
+            <input name = "redirect_uri" th:value="${#httpServletRequest.getAttribute('redirect_uri')}" th:type="text" hidden="true"/>
             <div>
                 <input type="text" placeholder="用户名" required="true" id="username" name="username" />
             </div>

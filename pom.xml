@@ -18,7 +18,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.4.1.RELEASE</version>
+        <version>1.4.2.RELEASE</version>
     </parent>
 
     <repositories>
@@ -92,6 +92,18 @@
             <version>${shiro.version}</version>
         </dependency>
 
+        <!-- oltu oauth -->
+        <dependency>
+            <groupId>org.apache.oltu.oauth2</groupId>
+            <artifactId>org.apache.oltu.oauth2.authzserver</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.oltu.oauth2</groupId>
+            <artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
         <!-- 数据库相关 -->
         <dependency>
             <groupId>com.jike.oracle</groupId>
@@ -137,10 +149,6 @@
         </dependency>
     </dependencies>
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 1ef15197b0af53a637b418c30c540a5b8e3e679a
     <build>
         <plugins>
             <plugin>
@@ -157,10 +165,6 @@
         </plugins>
     </build>
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 1ef15197b0af53a637b418c30c540a5b8e3e679a
     <distributionManagement>
         <repository>
             <id>nexus-releases</id>

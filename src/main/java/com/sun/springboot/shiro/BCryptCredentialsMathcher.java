@@ -22,6 +22,6 @@ public class BCryptCredentialsMathcher extends PasswordMatcher {
 		BCryptPasswordService passwordService = (BCryptPasswordService) getPasswordService();
 		String pwdInput = passwordService.getUnencryptPassword(upToken);
 
-		return getPasswordService().passwordsMatch(pwdInput, pwd);
+		return passwordService.passwordsMatch(pwdInput, pwd);
 	}
 }

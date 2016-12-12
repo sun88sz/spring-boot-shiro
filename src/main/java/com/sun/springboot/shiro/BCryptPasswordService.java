@@ -12,7 +12,7 @@ public class BCryptPasswordService implements PasswordService {
 	 * @return
 	 */
 	public String getUnencryptPassword(UsernamePasswordToken token) {
-		return token.getUsername() + token.getPassword() + "my_salt";
+		return token.getUsername() + new String(token.getPassword()) + "my_salt";
 	}
 
 	/**
@@ -51,8 +51,11 @@ public class BCryptPasswordService implements PasswordService {
 
 	public static void main(String[] args) {
 		BCryptPasswordService s = new BCryptPasswordService();
-		String s1 = s.encryptPassword(new UsernamePasswordToken("1", "2"));
+		String s1 = s.encryptPassword(s.getUnencryptPassword(new UsernamePasswordToken("1", "2")));
 		System.out.println(s1);
+
+		boolean b = s.passwordsMatch(s.getUnencryptPassword(new UsernamePasswordToken("1", "2")), s1);
+		System.out.println(b);
 	}
 
 }

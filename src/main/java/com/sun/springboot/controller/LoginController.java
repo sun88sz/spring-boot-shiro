@@ -1,6 +1,8 @@
 package com.sun.springboot.controller;
 
 import com.sun.springboot.bean.User;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -21,19 +23,29 @@ import javax.validation.Valid;
  * Shiro测试Controller
  *
  */
+@Api(value = "login-api", description = "用于用户登录")
 @Controller
 public class LoginController {
 
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
+	@ApiOperation(value = "默认路径", notes = "默认路径返回登录页面")
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String index() {
+		return "login";
+	}
+
+	@ApiOperation(value = "登录页面", notes = "获取登录页面")
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String loginForm( Model model) {
+	public String loginForm(Model model) {
 		model.addAttribute("user", new User());
 		return "login";
 	}
 
+	@ApiOperation(value = "登录", notes = "提交登录")
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(@Valid User user, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+	public String login(@Valid User user, Model model, BindingResult bindingResult,
+			RedirectAttributes redirectAttributes) {
 		if (bindingResult.hasErrors()) {
 			return "login";
 		}
@@ -77,6 +89,7 @@ public class LoginController {
 		}
 	}
 
+	@ApiOperation(value = "登出", notes = "退出登录接口")
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(RedirectAttributes redirectAttributes) {
 		// 使用权限管理工具进行用户的退出，跳出登录，给出提示信息
@@ -85,24 +98,19 @@ public class LoginController {
 		return "redirect:/login";
 	}
 
-	@RequestMapping("/")
-	public String index() {
-		return "login";
-	}
-
-	@RequestMapping("/hello")
-	@RequiresPermissions("xxx")
+	@RequestMapping(value = "/hello", method = RequestMethod.GET)
 	public String hello() {
 		return "hello";
 	}
 
-	@RequestMapping("/401")
+	@RequestMapping(value = "/401", method = RequestMethod.GET)
 	public String unauthorizedRole() {
 		logger.info("------没有权限-------");
 		return "401";
 	}
 
-	@RequestMapping("/403")
+	@RequestMapping(value = "/403", method = RequestMethod.GET)
+	@RequiresPermissions("xxx")
 	public String noPermission() {
 		return "../static/403";
 	}
@@ -113,7 +121,8 @@ public class LoginController {
 	// return "user";
 	// }
 
-	@RequestMapping("/user/edit/{userid}")
+	@RequestMapping(value = "/user/edit/{userid}", method = RequestMethod.GET)
+	@RequiresPermissions("xxx")
 	public String getUserList(@PathVariable int userid) {
 		logger.info("------进入用户信息修改-------");
 		return "user_edit";
