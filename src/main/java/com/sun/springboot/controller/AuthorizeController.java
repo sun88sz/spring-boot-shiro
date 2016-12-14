@@ -3,6 +3,8 @@ package com.sun.springboot.controller;
 import com.sun.springboot.bean.User;
 import com.sun.springboot.service.ClientService;
 import com.sun.springboot.service.OAuthService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.oltu.oauth2.as.issuer.MD5Generator;
 import org.apache.oltu.oauth2.as.issuer.OAuthIssuerImpl;
 import org.apache.oltu.oauth2.as.request.OAuthAuthzRequest;
@@ -31,6 +33,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+@Api(value = "oauth2-authorize-api", description = "oauth2第三方验证登录")
 @Controller
 public class AuthorizeController {
 
@@ -66,6 +69,7 @@ public class AuthorizeController {
 
 	}
 
+	@ApiOperation(value = "第三方验证")
 	@RequestMapping(value = "/authorize", method = RequestMethod.GET)
 	public Object authorize(HttpServletRequest request, Model model) throws URISyntaxException, OAuthSystemException {
 		try {

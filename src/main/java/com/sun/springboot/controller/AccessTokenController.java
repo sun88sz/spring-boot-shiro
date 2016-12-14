@@ -1,6 +1,8 @@
 package com.sun.springboot.controller;
 
 import com.sun.springboot.service.OAuthService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.oltu.oauth2.as.issuer.MD5Generator;
 import org.apache.oltu.oauth2.as.issuer.OAuthIssuer;
 import org.apache.oltu.oauth2.as.issuer.OAuthIssuerImpl;
@@ -23,11 +25,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URISyntaxException;
 
+@Api(value = "oauth2-accessToken-api", description = "oauth2第三方获取accessToken")
 @RestController
 public class AccessTokenController {
 	@Autowired
 	private OAuthService oAuthService;
 
+	@ApiOperation(value = "获取accessToken")
 	@RequestMapping("/accessToken")
 	public HttpEntity token(HttpServletRequest request) throws URISyntaxException, OAuthSystemException {
 		try {

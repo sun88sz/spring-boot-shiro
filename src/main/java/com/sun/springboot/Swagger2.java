@@ -33,7 +33,7 @@ public class Swagger2 {
                 .title("spring-boot-shiro Restful文档")
                 .description("")
                 .termsOfServiceUrl("")
-                .contact(new Contact("Luopan88","",""))
+                .contact(new Contact("Sun","",""))
                 .version("1.0")
                 .build();
     }

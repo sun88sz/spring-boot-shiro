@@ -20,10 +20,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 
 /**
- * Shiro测试Controller
+ * Shiro登录Controller
  *
  */
-@Api(value = "login-api", description = "用于用户登录")
+@Api(value = "login-api", description = "用户登录")
 @Controller
 public class LoginController {
 
