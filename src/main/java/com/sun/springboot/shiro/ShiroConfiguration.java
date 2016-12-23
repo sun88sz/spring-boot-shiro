@@ -2,17 +2,25 @@ package com.sun.springboot.shiro;
 
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
+import org.apache.shiro.session.SessionListener;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.Cookie;
+import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,11 +30,19 @@ import java.util.Map;
  * @myblog http://blog.csdn.net/catoop/
  * @create 2016年1月13日
  */
-@Configuration
+//@Configuration
 public class ShiroConfiguration {
 
 	private static final Logger logger = LoggerFactory.getLogger(ShiroConfiguration.class);
 
+	@Autowired
+	private StringRedisTemplate stringRedisTemplate;
+
+	/**
+	 * 密码验证方式
+	 * 
+	 * @return
+	 */
 	@Bean
 	public CredentialsMatcher getCredentialsMatcher() {
 		BCryptCredentialsMathcher BCryptCredentialsMathcher = new BCryptCredentialsMathcher();
@@ -40,6 +56,11 @@ public class ShiroConfiguration {
 		EhCacheManager em = new EhCacheManager();
 		em.setCacheManagerConfigFile("classpath:ehcache-shiro.xml");
 		return em;
+	}
+
+	public MyRedisCacheManager getRedisCacheManager(StringRedisTemplate redisTemplate) {
+		MyRedisCacheManager rcm = new MyRedisCacheManager();
+		return rcm;
 	}
 
 	/**
@@ -68,10 +89,49 @@ public class ShiroConfiguration {
 		return daap;
 	}
 
+	/**
+	 * 保存session
+	 * 
+	 * @param redisTemplate
+	 * @return
+	 */
+	@Bean
+	public SessionDAO getSessionDAO(StringRedisTemplate redisTemplate) {
+		MyRedisSessionDAO sessionDAO = new MyRedisSessionDAO();
+		sessionDAO.setRedisTemplate(redisTemplate);
+		sessionDAO.setSessionIdGenerator(new TokenSessionIdGenerator());
+		return sessionDAO;
+	}
+
+	@Bean
+	public DefaultWebSessionManager getSessionManager(SessionDAO sessionDAO) {
+		MySessionManager manager = new MySessionManager();
+		manager.setSessionValidationInterval(180000);// 相隔多久检查一次session的有效性
+		manager.setGlobalSessionTimeout(1800000);// session 有效时间为半小时 （毫秒单位）
+		Cookie cookie = new SimpleCookie();
+		// cookie.setDomain(".xxx.com");
+		cookie.setName("jwt");
+		cookie.setPath("/");
+		// cookie.setHttpOnly(true);
+		manager.setSessionIdCookie(cookie);
+
+		// session listener
+		MySessionListener mySessionListener1 = new MySessionListener();
+		List<SessionListener> listeners = new ArrayList<>();
+		listeners.add(mySessionListener1);
+		manager.setSessionListeners(listeners);
+
+		manager.setSessionDAO(sessionDAO);
+		return manager;
+	}
+
 	@Bean(name = "securityManager")
-	public DefaultWebSecurityManager getDefaultWebSecurityManager(MyShiroRealm myShiroRealm) {
+	public DefaultWebSecurityManager getDefaultWebSecurityManager(MyShiroRealm myShiroRealm,
+			DefaultWebSessionManager sessionManager) {
 		DefaultWebSecurityManager dwsm = new DefaultWebSecurityManager();
 		dwsm.setRealm(myShiroRealm);
+		dwsm.setSessionManager(sessionManager);
+
 		// <!-- 用户授权/认证信息Cache, 采用EhCache 缓存 -->
 		dwsm.setCacheManager(getEhCacheManager());
 		return dwsm;
@@ -82,6 +142,7 @@ public class ShiroConfiguration {
 			DefaultWebSecurityManager securityManager) {
 		AuthorizationAttributeSourceAdvisor aasa = new AuthorizationAttributeSourceAdvisor();
 		aasa.setSecurityManager(securityManager);
+
 		return aasa;
 	}
 

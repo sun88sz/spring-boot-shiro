@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "t_base_user_bak")
 @ApiModel(value = "用户对象", description = "用户详细实体")
-public class User {
+public class User extends BaseModel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

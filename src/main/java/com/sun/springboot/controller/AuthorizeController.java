@@ -1,6 +1,5 @@
 package com.sun.springboot.controller;
 
-import com.sun.springboot.bean.User;
 import com.sun.springboot.service.ClientService;
 import com.sun.springboot.service.OAuthService;
 import io.swagger.annotations.Api;
@@ -34,40 +33,13 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 @Api(value = "oauth2-authorize-api", description = "oauth2第三方验证登录")
-@Controller
+@Controller("/oauth")
 public class AuthorizeController {
 
 	@Autowired
 	private OAuthService oAuthService;
 	@Autowired
 	private ClientService clientService;
-
-	@RequestMapping(value = "/authorize", method = RequestMethod.POST)
-	public Object authorizeLogin(HttpServletRequest request, Model model, User user, String client_id,
-			String response_type, String redirect_uri)
-					throws URISyntaxException, OAuthSystemException, OAuthProblemException {
-
-		// 构建 OAuth 授权请求
-		// 检查传入的客户端 id 是否正确
-		if (!oAuthService.checkClientId(client_id)) {
-			OAuthResponse response = OAuthASResponse.errorResponse(HttpServletResponse.SC_BAD_REQUEST)
-					.setError(OAuthError.TokenResponse.INVALID_CLIENT).setErrorDescription("客户端不合法").buildJSONMessage();
-			return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
-		}
-
-		// 如果用户没有登录,跳转到登陆页面
-		Subject subject = SecurityUtils.getSubject();
-		// 登录失败时跳转到登陆页面
-		if (!login(subject, request)) {
-			model.addAttribute("client_id", client_id);
-			model.addAttribute("response_type", response_type);
-			model.addAttribute("redirect_uri", redirect_uri);
-			// return "oauth2login";
-			return "login_oauth";
-		}
-		return createAuthorizationCode(request, subject);
-
-	}
 
 	@ApiOperation(value = "第三方验证")
 	@RequestMapping(value = "/authorize", method = RequestMethod.GET)
@@ -151,9 +123,9 @@ public class AuthorizeController {
 	 * @return
 	 */
 	private boolean login(Subject subject, HttpServletRequest request) {
-//		if ("get".equalsIgnoreCase(request.getMethod())) {
-//			return false;
-//		}
+		// if ("get".equalsIgnoreCase(request.getMethod())) {
+		// return false;
+		// }
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		// if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
