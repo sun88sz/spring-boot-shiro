@@ -86,4 +86,9 @@ public class BaseModel implements Serializable {
 	public void setAccessWay(String accessWay) {
 		this.accessWay = accessWay;
 	}
+
+
+	public static void main(String[] args) {
+
+	}
 }

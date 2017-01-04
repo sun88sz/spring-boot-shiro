@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sun.springboot.dao.BaseUserMapper">
+  <resultMap id="BaseResultMap" type="com.sun.springboot.bean.BaseUser">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="USER_ID" jdbcType="DECIMAL" property="userId" />
+    <result column="DEPT_ID" jdbcType="DECIMAL" property="deptId" />
+    <result column="PURCHASER_ID" jdbcType="DECIMAL" property="purchaserId" />
+    <result column="COMPANY_ID" jdbcType="DECIMAL" property="companyId" />
+    <result column="COST_CENTER_ID" jdbcType="DECIMAL" property="costCenterId" />
+    <result column="USER_LEVEL_ID" jdbcType="DECIMAL" property="userLevelId" />
+    <result column="USERNAME" jdbcType="VARCHAR" property="username" />
+    <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+    <result column="EMPLOYEE_NO" jdbcType="VARCHAR" property="employeeNo" />
+    <result column="SEX" jdbcType="VARCHAR" property="sex" />
+    <result column="BIRTHDAY" jdbcType="TIMESTAMP" property="birthday" />
+    <result column="NATIONALITY" jdbcType="DECIMAL" property="nationality" />
+    <result column="NAME_CN" jdbcType="VARCHAR" property="nameCn" />
+    <result column="PINYIN_FIRST" jdbcType="VARCHAR" property="pinyinFirst" />
+    <result column="PINYIN_FULL" jdbcType="VARCHAR" property="pinyinFull" />
+    <result column="NAME_EN_LAST" jdbcType="VARCHAR" property="nameEnLast" />
+    <result column="NAME_EN_MIDDLE" jdbcType="VARCHAR" property="nameEnMiddle" />
+    <result column="NAME_EN_FIRST" jdbcType="VARCHAR" property="nameEnFirst" />
+    <result column="PHONE" jdbcType="VARCHAR" property="phone" />
+    <result column="FAX" jdbcType="VARCHAR" property="fax" />
+    <result column="MOBILEPHONE" jdbcType="VARCHAR" property="mobilephone" />
+    <result column="POSITION" jdbcType="VARCHAR" property="position" />
+    <result column="JOB" jdbcType="VARCHAR" property="job" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="IDC_NAME" jdbcType="VARCHAR" property="idcName" />
+    <result column="IDC_TYPE" jdbcType="VARCHAR" property="idcType" />
+    <result column="IDC_NO" jdbcType="VARCHAR" property="idcNo" />
+    <result column="IDC_VALIDITY_DATE" jdbcType="VARCHAR" property="idcValidityDate" />
+    <result column="IDC_NAME2" jdbcType="VARCHAR" property="idcName2" />
+    <result column="IDC_TYPE2" jdbcType="VARCHAR" property="idcType2" />
+    <result column="IDC_NO2" jdbcType="VARCHAR" property="idcNo2" />
+    <result column="IDC_VALIDITY_DATE2" jdbcType="VARCHAR" property="idcValidityDate2" />
+    <result column="IDC_NAME3" jdbcType="VARCHAR" property="idcName3" />
+    <result column="IDC_TYPE3" jdbcType="VARCHAR" property="idcType3" />
+    <result column="IDC_NO3" jdbcType="VARCHAR" property="idcNo3" />
+    <result column="IDC_VALIDITY_DATE3" jdbcType="VARCHAR" property="idcValidityDate3" />
+    <result column="STATE" jdbcType="VARCHAR" property="state" />
+    <result column="VISIT_NUM" jdbcType="DECIMAL" property="visitNum" />
+    <result column="LAST_VISIT_TIME" jdbcType="TIMESTAMP" property="lastVisitTime" />
+    <result column="USER_TYPE" jdbcType="VARCHAR" property="userType" />
+    <result column="CREATE_USER" jdbcType="DECIMAL" property="createUser" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="MODIFY_USER" jdbcType="DECIMAL" property="modifyUser" />
+    <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="LAST_LOGIN_TIME" jdbcType="TIMESTAMP" property="lastLoginTime" />
+    <result column="LOGIN_FALSE_COUNT" jdbcType="DECIMAL" property="loginFalseCount" />
+    <result column="TEMP_PASSWORD" jdbcType="VARCHAR" property="tempPassword" />
+    <result column="TEMP_VALID_TIME" jdbcType="TIMESTAMP" property="tempValidTime" />
+    <result column="PAY_PASSWORD" jdbcType="VARCHAR" property="payPassword" />
+    <result column="TEMP_PAY_PASSWORD" jdbcType="VARCHAR" property="tempPayPassword" />
+    <result column="TEMP_VALID_PAY_TIME" jdbcType="TIMESTAMP" property="tempValidPayTime" />
+    <result column="INV_CODE" jdbcType="VARCHAR" property="invCode" />
+    <result column="INV_CREATE_TIME" jdbcType="TIMESTAMP" property="invCreateTime" />
+    <result column="IS_INV_USED" jdbcType="DECIMAL" property="isInvUsed" />
+    <result column="IDENTIFY_CODE" jdbcType="VARCHAR" property="identifyCode" />
+    <result column="IDENTIFY_CREATE_TIME" jdbcType="TIMESTAMP" property="identifyCreateTime" />
+    <result column="IDENTIFY_COUNT" jdbcType="DECIMAL" property="identifyCount" />
+    <result column="SUPERIOR_USER_ID" jdbcType="DECIMAL" property="superiorUserId" />
+    <result column="BANK_ID" jdbcType="VARCHAR" property="bankId" />
+    <result column="LAST_PREBOOK_TIME" jdbcType="TIMESTAMP" property="lastPrebookTime" />
+  </resultMap>
+</mapper>

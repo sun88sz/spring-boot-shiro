@@ -1,4 +1,4 @@
-package com.sun.springboot.datasource;
+package com.sun.configuration.redis;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

@@ -1,7 +1,8 @@
-package com.sun.springboot.druid;
+package com.sun.configuration.druid;
 
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
+import com.sun.springboot.utils.security.AESUtil;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +18,28 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class DruidConfiguration {
+//
+//	@Bean
+//	@ConfigurationProperties(prefix = "spring.datasource")
+//	public DruidDataSourceProperties getDatasourceProperties() {
+//		return new DruidDataSourceProperties();
+//	}
+//
+//	@Bean
+//	public DruidDataSource getDatasource(DruidDataSourceProperties properties) {
+//		DruidDataSource build = (DruidDataSource) properties.initializeDataSourceBuilder().type(DruidDataSource.class)
+//				.build();
+//		// 在这里使用无效, 密码未解密, 原因未知
+//		// build.setPasswordCallback(new DBPasswordCallback());
+//
+//		try {
+//			String pwd = AESUtil.decrypt(properties.getPassword(), DBPasswordCallback.key);
+//			build.setPassword(pwd);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return build;
+//	}
 
 	/**
 	 * 注册一个StatViewServlet
@@ -57,4 +80,17 @@ public class DruidConfiguration {
 		return filterRegistrationBean;
 	}
 
+	// 请使用该方法加密后，把密文写入datasource.properties
+	public static void main(String[] args) {
+		try {
+			String keyEn = AESUtil.encrypt("jike17712613261", DBPasswordCallback.key);
+			System.out.println(keyEn);
+
+			String decrypt = AESUtil.decrypt(keyEn, DBPasswordCallback.key);
+			System.out.println(decrypt);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
